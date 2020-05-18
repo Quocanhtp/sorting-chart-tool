@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
-const getDataTable = require("./API/getDataTable");
-const getDataChart = require("./API/getDataChart");
-const getColor = require("./API/getColor");
+const getData = require("./API/getData");
 
-app.use("./getDataTable", getDataTable);
-app.use("./getDataChart", getDataChart);
-app.use("./getColor", getColor);
+app.use("./getDataTable", getData);
+app.use("./getDataChart", getData);
+app.use("./getColor", getData);
