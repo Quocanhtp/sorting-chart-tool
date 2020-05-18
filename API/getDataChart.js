@@ -31,10 +31,10 @@ MongoClient.connect(
       mydb
         .collection("") //your DB collection
         .find({})
-        .sort({ Date: 1, Name: 1 })
+        .sort({ date: 1, name: 1 })
         .toArray((err, docs) => {
           if (err) throw err;
-          else res.send(lodash.groupBy(docs, "Name"));
+          else res.send(lodash.groupBy(docs, "name"));
         });
     });
   }
