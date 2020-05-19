@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = 8000;
 const lodash = require("lodash");
+const bodyParser = require("body-parser");
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain to make the request from
   res.header(
@@ -11,7 +12,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+app.use(bodyParser.urlencoded({ extended: true }));
 const uri = ``; //your authentication URI string
 
 app.listen(port, () => {
@@ -26,8 +27,8 @@ app.listen(port, () => {
       if (err) console.log(err);
 
       var mydb = db.db(""); //your DB name
-      var chart = mydb.collection("chart"); //your DB collection
-      var config = mydb.collection("config"); //your DB collection config for colors
+      var chart = mydb.collection(""); //your DB collection
+      var config = mydb.collection(""); //your DB collection config for colors
       console.log(`Server listen on port ${port}`);
 
       app.get("/getColor", (req, res) => {
@@ -55,6 +56,26 @@ app.listen(port, () => {
             if (err) throw err;
             else res.send(docs);
           });
+      });
+
+      app.get("/getDataSort", (req, res) => {
+        chart
+          .find({})
+          .sort({ date: 1, name: 1 })
+          .toArray((err, docs) => {
+            if (err) throw err;
+            else res.send(docs);
+          });
+      });
+      app.post("/sort", (req, res) => {
+        const dataSort = {
+          startDate: req.body.startDate,
+          endDate: req.body.endDate,
+          name: req.body.name,
+        };
+        console.log(dataSort);
+        res.send(dataSort);
+        res.end();
       });
     }
   );
