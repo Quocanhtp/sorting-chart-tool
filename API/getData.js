@@ -17,11 +17,11 @@ app.use(function (req, res, next) {
 });
 
 app.use(bodyParser.json());
-// const uri = `mongodb://test01:${encodeURIComponent(
-//   "a@123456"
-// )}@103.74.122.87:27000`; //your authentication URI string
+const uri = `mongodb://test01:${encodeURIComponent(
+  "a@123456"
+)}@103.74.122.87:27000`; //your authentication URI string
 
-const uri = `mongodb://localhost:27017`; //your authentication URI string
+// const uri = `mongodb://localhost:27017`; //your authentication URI string
 
 app.listen(port, () => {
   MongoClient.connect(
