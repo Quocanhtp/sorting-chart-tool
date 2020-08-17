@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 //   "a@123456"
 // )}@103.74.122.87:27000`; //your authentication URI string
 
-const uri = `mongodb://localhost:27017`; //your authentication URI string
+const uri = process.env.DB_FTECH_URI_HEADER + process.env.DB_FTECH_URI_USERNAME + encodeURIComponent(`${process.env.DB_FTECH_URI_PASSWORD}`) + process.env.DB_FTECH_URI_IP;
 
 app.get("/getDataSort", (req, res) => {
   MongoClient.connect(

@@ -1,13 +1,10 @@
 const MongoClient = require("mongodb").MongoClient;
 const express = require("express");
 const app = express();
-const port = 8000;
-const lodash = require("lodash");
 const bodyParser = require("body-parser");
-const moment = require("moment");
-const dateFormat = require("dateformat");
+require("dotenv/config");
 
-app.use(function (req, res, next) {
+app.use(function (req, res, next) {  
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain to make the request from
   res.header(
     "Access-Control-Allow-Headers",
@@ -17,11 +14,9 @@ app.use(function (req, res, next) {
 });
 
 app.use(bodyParser.json());
-// const uri = `mongodb://test01:${encodeURIComponent(
-//   "a@123456"
-// )}@103.74.122.87:27000`; //your authentication URI string
 
-const uri = `mongodb://localhost:27017`; //your authentication URI string
+const uri = process.env.DB_FTECH_URI_HEADER + process.env.DB_FTECH_URI_USERNAME + encodeURIComponent(`${process.env.DB_FTECH_URI_PASSWORD}`) + process.env.DB_FTECH_URI_IP;
+console.log(uri); 
 
 app.get("/getColor", (req, res) => {
   MongoClient.connect(

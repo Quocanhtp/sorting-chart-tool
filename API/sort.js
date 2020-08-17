@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 //   "a@123456"
 // )}@103.74.122.87:27000`; //your authentication URI string
 
-const uri = `mongodb://localhost:27017`; //your authentication URI string
+const uri = process.env.DB_FTECH_URI_HEADER + process.env.DB_FTECH_URI_USERNAME + encodeURIComponent(`${process.env.DB_FTECH_URI_PASSWORD}`) + process.env.DB_FTECH_URI_IP;
 
 app.post("/sort", (req, res) => {
   MongoClient.connect(
@@ -45,26 +45,34 @@ app.post("/sort", (req, res) => {
         .collation({ locale: "en_US", numericOrdering: true })
         .toArray((err, docs) => {
           if (err) throw err;
-
-          docs.map((data) => {
-            if (
-              dataSort.name === "Tất Cả" &&
-              data.date >= startDate &&
-              data.date <= endDate
-            ) {
-              res.write(JSON.stringify(data), () => {
-                res.end();
-              });
-            } else if (
-              dataSort.name === data.name &&
-              data.date >= startDate &&
-              data.date <= endDate
-            ) {
-              res.write(JSON.stringify(data), () => {
-                res.end();
-              });
-            }
+          const { name } = dataSort;
+          let response = docs.filter(
+            (x) => x.date >= startDate && x.date <= endDate
+          );
+          if (dataSort.name.toLowerCase() !== "tất cả")
+            response = response.filter((x) => x.name === name);
+          res.write(JSON.stringify(response), () => {
+            res.end();
           });
+          // docs.map((data) => {
+          //   if (
+          //     dataSort.name === "Tất Cả" &&
+          //     data.date >= startDate &&
+          //     data.date <= endDate
+          //   ) {
+          //     res.write(JSON.stringify(data), () => {
+          //       res.end();
+          //     });
+          //   } else if (
+          //     dataSort.name === data.name &&
+          //     data.date >= startDate &&
+          //     data.date <= endDate
+          //   ) {
+          //     res.write(JSON.stringify(data), () => {
+          //       res.end();
+          //     });
+          //   }
+          // });
         });
     }
   );
