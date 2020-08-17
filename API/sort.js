@@ -54,25 +54,6 @@ app.post("/sort", (req, res) => {
           res.write(JSON.stringify(response), () => {
             res.end();
           });
-          // docs.map((data) => {
-          //   if (
-          //     dataSort.name === "Tất Cả" &&
-          //     data.date >= startDate &&
-          //     data.date <= endDate
-          //   ) {
-          //     res.write(JSON.stringify(data), () => {
-          //       res.end();
-          //     });
-          //   } else if (
-          //     dataSort.name === data.name &&
-          //     data.date >= startDate &&
-          //     data.date <= endDate
-          //   ) {
-          //     res.write(JSON.stringify(data), () => {
-          //       res.end();
-          //     });
-          //   }
-          // });
         });
     }
   );
